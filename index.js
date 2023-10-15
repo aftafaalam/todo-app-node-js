@@ -9,7 +9,7 @@ let todos = [];
 
 //Creating a todo 
 app.post('/todo', (req, res) => {
-    //console.log(req.body);
+    console.log(req.body);
     const { title } = req.body;
     if (!title) {
         return res.status(400).json({
