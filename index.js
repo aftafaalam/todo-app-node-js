@@ -1,11 +1,42 @@
 //TODO App
 const express = require("express");
+const jwt = require('jsonwebtoken');
 
 const app = express();
 app.use(express.json());
 
 const port = 5001;
+const JWT_SECRET = "ASDFGHJKL"
 let todos = [];
+let tokens = [];
+
+/*login
+usernme: 
+password:
+*/
+app.post('/login', (req, res) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.status(400).send("Username or Password is missing");
+    }
+
+    if (username !== "aftaf" || password !== 'Changeme') {
+        return res.status(401).send("Username or password doesnot match");
+    }
+
+    //create Token
+    const token = jwt.sign({username},JWT_SECRET );
+    tokens.push(token);
+
+
+    res.status(200).send({token, message: `Successfully Loggedin with user ${username}`});
+});
+
+
+/*logout
+
+*/
 
 //Creating a todo 
 app.post('/todo', (req, res) => {
